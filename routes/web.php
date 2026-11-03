@@ -104,6 +104,7 @@ Route::middleware(['auth', 'active'])->group(function () {
 
     Route::put('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings')->middleware('can:manage-system');
     Route::post('/admin/logo', [AdminController::class, 'logo'])->name('admin.logo')->middleware('can:manage-system');
+    Route::delete('/admin/logo', [AdminController::class, 'clearLogo'])->name('admin.logo.clear')->middleware('can:manage-system');
     Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('admin.users.store')->middleware('can:manage-system');
     Route::patch('/admin/user/{user}/role', [AdminController::class, 'role'])->name('admin.users.role')->middleware('can:manage-system');
     Route::patch('/admin/user/{user}/status', [AdminController::class, 'status'])->name('admin.users.status')->middleware('can:manage-system');

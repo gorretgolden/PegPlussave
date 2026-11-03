@@ -41,11 +41,18 @@ class PermissionCatalog
     ];
 
     /**
+     * The desks a member and the System Owner both open: what the group does, not what it holds.
+     */
+    public const SHARED = [
+        'view-dashboard', 'view-calendar', 'view-directory', 'view-notices', 'view-minutes',
+    ];
+
+    /**
      * What every signed-in member sees, whatever their committee role.
      */
     public const EVERYONE = [
-        'view-dashboard', 'view-own-savings', 'view-own-loans', 'make-member-entry',
-        'view-calendar', 'view-directory', 'view-notices', 'view-minutes',
+        ...self::SHARED,
+        'view-own-savings', 'view-own-loans', 'make-member-entry',
     ];
 
     public const ROLES = [
@@ -59,7 +66,7 @@ class PermissionCatalog
             'view-approvals', 'check-as-chair',
             'view-treasury', 'view-reports', 'view-ledger',
             'view-mobilisation', 'view-audit',
-            'add-event', 'post-notice', 'record-minutes',
+            'add-event', 'post-notice', 'record-minutes', 'add-prospect',
         ],
 
         'secretary' => [
@@ -113,7 +120,10 @@ class PermissionCatalog
     public static function abilitiesFor(string $role): array
     {
         if ($role === 'admin') {
-            return self::ROLES['admin'];
+            // The System Owner reads the group's notices, minutes and register, because that is where
+            // their own register-member and edit-member abilities are used. What they hold is the
+            // shared set, never the money desks.
+            return array_values(array_unique(array_merge(self::SHARED, self::ROLES['admin'])));
         }
 
         return array_values(array_unique(array_merge(self::EVERYONE, self::ROLES[$role] ?? [])));

@@ -79,8 +79,8 @@
                   data-policy="{{ json_encode($loanPolicy) }}" data-facts="{{ json_encode($facts) }}">
                 @csrf
                 <div class="field">
-                    <label for="lb-m">Member</label>
-                    <select id="lb-m" name="lb_member">
+                    <label for="tlb-m">Member</label>
+                    <select id="tlb-m" name="lb_member">
                         @foreach ($modals['members'] as $member)
                             <option value="{{ $member->id }}">{{ $member->code }} · {{ $member->name }}</option>
                         @endforeach
@@ -88,13 +88,13 @@
                 </div>
                 <div class="grid2">
                     <div class="field">
-                        <label for="lb-a">Amount (UGX)</label>
-                        <input id="lb-a" name="lb_amount" type="number" min="{{ \App\Http\Controllers\MemberLoanController::MINIMUM }}" step="10000" inputmode="numeric" required>
+                        <label for="tlb-a">Amount (UGX)</label>
+                        <input id="tlb-a" name="lb_amount" type="number" min="{{ \App\Http\Controllers\MemberLoanController::MINIMUM }}" step="10000" inputmode="numeric" required>
                         @error('lb_amount')<div class="field-error">{{ $message }}</div>@enderror
                     </div>
                     <div class="field">
-                        <label for="lb-n">Repayment period</label>
-                        <select id="lb-n" name="lb_months" data-max="0">
+                        <label for="tlb-n">Repayment period</label>
+                        <select id="tlb-n" name="lb_months" data-max="0">
                             @foreach (range(1, (int) $loanPolicy['maxMonths']) as $months)
                                 <option value="{{ $months }}">{{ $months }} {{ $months > 1 ? 'months' : 'month' }}</option>
                             @endforeach
@@ -104,21 +104,21 @@
                 </div>
                 <div class="grid2">
                     <div class="field">
-                        <label for="lb-p">Purpose</label>
-                        <select id="lb-p" name="lb_purpose">
+                        <label for="tlb-p">Purpose</label>
+                        <select id="tlb-p" name="lb_purpose">
                             @foreach (Transaction::PURPOSES as $purpose)
                                 <option>{{ $purpose }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="field">
-                        <label for="lb-d">Details (optional)</label>
-                        <input id="lb-d" name="lb_detail" placeholder="e.g. Term 1 fees">
+                        <label for="tlb-d">Details (optional)</label>
+                        <input id="tlb-d" name="lb_detail" placeholder="e.g. Term 1 fees">
                     </div>
                 </div>
                 <div class="field">
-                    <label for="lb-note">Treasurer's note</label>
-                    <textarea id="lb-note" name="lb_note" placeholder="Required when the loan is outside policy. It then goes to the Patron."></textarea>
+                    <label for="tlb-note">Treasurer's note</label>
+                    <textarea id="tlb-note" name="lb_note" placeholder="Required when the loan is outside policy. It then goes to the Patron."></textarea>
                     @error('lb_note')<div class="field-error">{{ $message }}</div>@enderror
                 </div>
                 <div class="loan-preview"></div>
@@ -362,8 +362,8 @@
                   data-figures="{{ route('treasury.exit-figures') }}">
                 @csrf
                 <div class="field">
-                    <label for="x-m">Member leaving PlusSave</label>
-                    <select id="x-m" name="exi_member">
+                    <label for="ex-m">Member leaving PlusSave</label>
+                    <select id="ex-m" name="exi_member">
                         @foreach ($leaving as $member)
                             <option value="{{ $member->id }}" @selected($member->exit_flagged)>
                                 {{ $member->code }} · {{ $member->name }}{{ $member->exit_flagged ? ' · exit notice' : '' }}
@@ -374,12 +374,12 @@
                 <div class="exit-calc"></div>
                 <div class="grid2">
                     <div class="field">
-                        <label for="x-d">Exit date</label>
-                        <input id="x-d" name="exi_date" type="date" value="{{ $today }}">
+                        <label for="ex-d">Exit date</label>
+                        <input id="ex-d" name="exi_date" type="date" value="{{ $today }}">
                     </div>
                     <div class="field">
-                        <label for="x-r">Reason</label>
-                        <select id="x-r" name="exi_reason">
+                        <label for="ex-r">Reason</label>
+                        <select id="ex-r" name="exi_reason">
                             @foreach ($reasons as $reason)
                                 <option>{{ $reason }}</option>
                             @endforeach

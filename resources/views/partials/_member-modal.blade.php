@@ -115,13 +115,13 @@
                     @csrf
                     <p class="muted small">Record that {{ $member->name }} is leaving PlusSave. The Treasurer then prepares the settlement of savings and interest, which the Chairperson and Patron approve.</p>
                     <div class="field">
-                        <label for="en-n">Note for the Treasurer</label>
-                        <input id="en-n" name="note" required placeholder="e.g. Resigned. Last day 30 Nov 2026.">
+                        <label for="en-n-{{ $member->id }}">Note for the Treasurer</label>
+                        <input id="en-n-{{ $member->id }}" name="note" required placeholder="e.g. Resigned. Last day 30 Nov 2026.">
                         @error('note')<div class="field-error">{{ $message }}</div>@enderror
                     </div>
                     <div class="field">
-                        <label for="en-d">Last day</label>
-                        <input id="en-d" name="exit_on" type="date" value="{{ now()->toDateString() }}">
+                        <label for="en-d-{{ $member->id }}">Last day</label>
+                        <input id="en-d-{{ $member->id }}" name="exit_on" type="date" value="{{ now()->toDateString() }}">
                     </div>
                     <div class="form-actions">
                         <button type="button" class="btn" data-close-modal>Cancel</button>

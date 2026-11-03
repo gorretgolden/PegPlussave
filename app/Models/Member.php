@@ -9,6 +9,15 @@ class Member extends Model
 {
     use HasFactory;
 
+    /**
+     * The PlusSave departments a member can be drawn from. New staff join PEG one at a time, so the
+     * register offers the list instead of a free box that gets typed three different ways.
+     */
+    public const DEPARTMENTS = [
+        'Executive Office', 'Operations', 'Finance', 'Credit', 'Agency Banking',
+        'Customer Service', 'Marketing', 'HR & Admin', 'IT',
+    ];
+
     protected $fillable = [
         'code', 'name', 'department', 'monthly_pledge', 'joined_on',
         'extension', 'status', 'exit_on', 'exit_flagged', 'exit_note',

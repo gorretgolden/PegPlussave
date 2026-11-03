@@ -41,14 +41,14 @@
                 <x-kv :pairs="$head" />
                 <div class="grid2">
                     <div class="field">
-                        <label for="ap-a">Amount (UGX)</label>
-                        <input id="ap-a" name="ap_amount" type="number" min="{{ \App\Http\Controllers\MemberLoanController::MINIMUM }}"
+                        <label for="ap-a-{{ $loan->id }}">Amount (UGX)</label>
+                        <input id="ap-a-{{ $loan->id }}" name="ap_amount" type="number" min="{{ \App\Http\Controllers\MemberLoanController::MINIMUM }}"
                                step="10000" required value="{{ $loan->amount }}">
                         @error('ap_amount')<div class="field-error">{{ $message }}</div>@enderror
                     </div>
                     <div class="field">
-                        <label for="ap-n">Repayment period</label>
-                        <select id="ap-n" name="ap_months" data-max="0">
+                        <label for="ap-n-{{ $loan->id }}">Repayment period</label>
+                        <select id="ap-n-{{ $loan->id }}" name="ap_months" data-max="0">
                             @foreach (range(1, $ceiling) as $months)
                                 <option value="{{ $months }}" @selected($months === (int) $loan->months)>{{ $months }} {{ $months > 1 ? 'months' : 'month' }}</option>
                             @endforeach
@@ -58,8 +58,8 @@
                 </div>
                 <div class="loan-preview"></div>
                 <div class="field">
-                    <label for="ap-note">Appraisal note</label>
-                    <textarea id="ap-note" name="ap_note" placeholder="Your recommendation. Required to decline, or to submit a loan outside policy."></textarea>
+                    <label for="ap-note-{{ $loan->id }}">Appraisal note</label>
+                    <textarea id="ap-note-{{ $loan->id }}" name="ap_note" placeholder="Your recommendation. Required to decline, or to submit a loan outside policy."></textarea>
                     @error('ap_note')<div class="field-error">{{ $message }}</div>@enderror
                 </div>
                 <x-maker-note />

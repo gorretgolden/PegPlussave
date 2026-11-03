@@ -227,7 +227,7 @@
       }
 
       var n = +months.value || 1;
-      var list = schedule(value, +(f.dataset.rate || policy.rate), n, f.dataset.method || policy.method, iso(new Date()));
+      var list = schedule(value, +(f.dataset.rate || policy.rate), n, f.dataset.method || policy.method, new Date());
       var interestTotal = list.reduce(function (t, row) { return t + row.interest; }, 0);
       var list2 = checks(fact(), value, n, policy, treasury);
       var hard = list2.filter(function (c) { return !c.ok && !c.soft; }).length;

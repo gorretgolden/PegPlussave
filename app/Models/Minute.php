@@ -13,6 +13,11 @@ class Minute extends Model
         return ['date' => 'date', 'decisions' => 'array'];
     }
 
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
     public function scopeOrdered($query)
     {
         return $query->orderByDesc('date')->orderByDesc('id');

@@ -124,10 +124,12 @@
   }
 
   // A filter that needs no other button. The form still carries its Go button for the reader whose
-  // scripting is off; this only saves the tap.
+  // scripting is off; this only saves the tap. A file box counts too, because nothing else can be
+  // typed into it: choosing the file is the whole instruction.
   document.addEventListener('change', function (event) {
     var form = event.target.closest && event.target.closest('form[data-submit]');
-    if (form && (event.target.matches('select') || event.target.matches('input[type=checkbox]'))) {
+    if (!form) return;
+    if (event.target.matches('select') || event.target.matches('input[type=checkbox]') || event.target.matches('input[type=file]')) {
       form.submit();
     }
   });
@@ -140,6 +142,64 @@
       if (row.dataset.href) { window.location = row.dataset.href; return; }
       show(row.getAttribute('data-open'), row);
     });
+  });
+
+  // A box that narrows a list already on the screen. The rows stay in the page, so a reader whose
+  // scripting is off simply sees the whole list instead of a broken half of it.
+  document.querySelectorAll('[data-search]').forEach(function (box) {
+    var rows = Array.prototype.slice.call(document.querySelectorAll(box.getAttribute('data-search')));
+    if (!rows.length) return;
+
+    var last = '';
+
+    box.addEventListener('input', function () {
+      var needle = box.value.trim().toLowerCase();
+      if (needle === last) return;
+      last = needle;
+
+      rows.forEach(function (row) {
+        row.hidden = needle !== '' && row.textContent.toLowerCase().indexOf(needle) === -1;
+      });
+
+      var body = rows[0].parentNode;
+      var none = body.querySelector('.no-match');
+
+      if (needle === '') {
+        none && none.remove();
+        return;
+      }
+
+      var seen = rows.some(function (row) { return !row.hidden; });
+
+      if (!seen && !none) {
+        none = document.createElement('tr');
+        none.className = 'no-match';
+        var cell = document.createElement('td');
+        cell.colSpan = rows[0].children.length;
+        cell.className = 'empty';
+        cell.textContent = 'Nothing matches that.';
+        none.appendChild(cell);
+        body.appendChild(none);
+      }
+    });
+  });
+
+  // Removing something from the group's record is not reversible, and a row that looks like any other
+  // is easy to tap wrong. The question is asked once, on the form itself, so the reader who says no
+  // has changed nothing; the words are in the page, so a browser without scripting still sends.
+  document.addEventListener('submit', function (event) {
+    var form = event.target.closest('form[data-confirm]');
+    if (!form || form.dataset.confirmSent === '1') return;
+    event.preventDefault();
+
+    var ask = function (yes) {
+      if (!yes) return;
+      form.dataset.confirmSent = '1';
+      form.requestSubmit();
+    };
+
+    if (window.confirm) ask(window.confirm(form.getAttribute('data-confirm')));
+    else form.submit();
   });
 
   // "Copy as CSV" puts the table the reader is looking at on the clipboard. The rows are the ones

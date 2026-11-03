@@ -1,8 +1,12 @@
 {{-- The board every member reads. Pinning and removing are the Spokesman's, not a decoration on
      somebody else's notice, so the links only appear for the account that may post. --}}
 <section class="panel">
-    <x-sec :title="$title ?? 'Notice board'">
-        @if (! isset($noAll))
+    <x-sec :title="$title ?? 'Notice board'" :sub="$sub ?? null">
+        @if ($post ?? false)
+            <x-slot:actions>
+                <button class="btn primary" type="button" data-open="dlg-notice"><x-icon name="plus" />Post a notice</button>
+            </x-slot:actions>
+        @elseif (! ($noAll ?? false))
             <x-slot:actions>
                 <a class="btn sm" href="{{ route('pages.notices') }}">All notices</a>
             </x-slot:actions>
@@ -24,7 +28,8 @@
                         @method('PATCH')
                         <button class="link-btn" type="submit">{{ $notice->pinned ? 'Unpin' : 'Pin' }}</button>
                     </form>
-                    <form class="inline" method="POST" action="{{ route('notices.destroy', $notice) }}">
+                    <form class="inline" method="POST" action="{{ route('notices.destroy', $notice) }}"
+                          data-confirm="Remove {{ $notice->title }}? Members who have not read it will not see it again.">
                         @csrf
                         @method('DELETE')
                         <button class="link-btn" type="submit">Remove</button>
