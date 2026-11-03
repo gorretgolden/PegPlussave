@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PlusSave PEG design system</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="public/css/peg.css">
+<style>
+/* Sheet chrome only. Nothing here is part of the product; the swatches, samples and labels below are
+   drawn entirely with the tokens and classes from peg.css so the sheet cannot drift from the build. */
+body{background:var(--bg);color:var(--ink)}
+.sheet{max-width:1240px;margin:0 auto;padding:32px 28px 80px;display:grid;gap:28px}
+.sheet-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.sheet-head h1{font-size:clamp(24px,3vw,34px);font-weight:800;letter-spacing:-.025em}
+.sheet-head p{color:var(--muted);max-width:60ch;margin-top:6px}
+.band{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.sw{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:10px;display:grid;gap:8px}
+.sw i{display:block;height:44px;border-radius:8px;border:1px solid var(--line)}
+.sw b{font-size:12px}
+.sw span{font-size:11px;color:var(--muted);font-family:var(--f-num)}
+.spec{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:16px 18px;display:grid;gap:12px}
+.spec>*{min-width:0}
+.spec h3{font-size:15px;font-weight:800}
+.spec p{font-size:12.5px;color:var(--muted);max-width:78ch}
+.samples{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.type-row{display:grid;grid-template-columns:210px minmax(0,1fr);gap:14px;align-items:baseline;border-bottom:1px solid var(--line);padding:8px 0}
+.type-row:last-child{border-bottom:0}
+.type-row em{font-style:normal;font-family:var(--f-num);font-size:11px;color:var(--muted)}
+.demo-modal{border:1px dashed var(--line-strong);border-radius:var(--r);padding:18px;background:var(--surface-2)}
+.demo-modal .modal{margin:0}
+.demo-back{background:var(--scrim);border-radius:var(--r);padding:24px}
+.toast.static{position:static}
+.stack-demo{display:grid;gap:12px}
+.legend-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;font-size:12px;color:var(--muted)}
+.legend-strip span{display:flex;gap:6px;align-items:center}
+.legend-strip i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.step{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;align-items:start;font-size:13px;padding:8px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:0}
+.step b{font-family:var(--f-num);color:var(--brand-text);font-weight:600}
+@media (max-width:960px){.sheet{padding:20px 16px 60px}}
+@media (max-width:640px){.type-row{grid-template-columns:minmax(0,1fr);gap:2px;padding:10px 0}}
+.type-row em{overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<div class="sheet">
+    <div class="sheet-head">
+        <div>
+            <div class="eyebrow">PlusSave Partners Employee Group</div>
+            <h1>Design system</h1>
+            <p>The tokens, type and components the PEG system is built with. Everything on this page is
+                rendered with <code>public/css/peg.css</code> and the Blade components in
+                <code>resources/views/components/</code>, so what you see is what the app draws. The
+                written contract lives beside it in <code>DESIGN.md</code>.</p>
+        </div>
+        <div class="samples">
+            <button class="btn" type="button" id="flip">Show the dark theme</button>
+        </div>
+    </div>
+
+    <div class="spec">
+        <h3>Five rules that outrank the rest</h3>
+        <div class="stack-demo">
+            <div class="step"><b>01</b><span>A ledger, not a dashboard. The figure, then the rule that produced it, then the rows, then the total.</span></div>
+            <div class="step"><b>02</b><span>Every figure can be opened. A row is a link to the record and its approvals behind it.</span></div>
+            <div class="step"><b>03</b><span>Money has an owner and a stamp. No posted amount appears without its maker-checker trail.</span></div>
+            <div class="step"><b>04</b><span>Amounts stay where they belong. Mobilisation shows names; treasury shows figures; the server decides.</span></div>
+            <div class="step"><b>05</b><span>One accent, one signal. Green is action, gold is the exception, red is error or money owed.</span></div>
+        </div>
+    </div>
+
+    <section class="spec">
+        <h3>Colour</h3>
+        <p>Every colour is a custom property on <code>:root</code>. A rule that carries a hex value will
+            not survive a theme change, so add a token first and use it everywhere after. The box shows
+            the live token in the theme you are viewing; the hex printed under it is the light value, and
+            the dark pair is in the table in <code>DESIGN.md</code>.</p>
+        <div class="band">
+            <div class="sw"><i style="background:var(--bg)"></i><b>--bg</b><span>#F1F5F2</span></div>
+            <div class="sw"><i style="background:var(--surface)"></i><b>--surface</b><span>#FFFFFF</span></div>
+            <div class="sw"><i style="background:var(--surface-2)"></i><b>--surface-2</b><span>#ECF2EE</span></div>
+            <div class="sw"><i style="background:var(--ink)"></i><b>--ink</b><span>#13211A</span></div>
+            <div class="sw"><i style="background:var(--muted)"></i><b>--muted</b><span>#58695F</span></div>
+            <div class="sw"><i style="background:var(--line)"></i><b>--line</b><span>#D7E0D9</span></div>
+            <div class="sw"><i style="background:var(--line-strong)"></i><b>--line-strong</b><span>#BFCDC3</span></div>
+        </div>
+        <div class="band">
+            <div class="sw"><i style="background:var(--brand)"></i><b>--brand</b><span>#0B5D3B</span></div>
+            <div class="sw"><i style="background:var(--brand-soft)"></i><b>--brand-soft</b><span>#DBEEE2</span></div>
+            <div class="sw"><i style="background:var(--gold)"></i><b>--gold</b><span>#946A0C</span></div>
+            <div class="sw"><i style="background:var(--gold-soft)"></i><b>--gold-soft</b><span>#F6EBCB</span></div>
+            <div class="sw"><i style="background:var(--ok)"></i><b>--ok</b><span>#1D7246</span></div>
+            <div class="sw"><i style="background:var(--warn)"></i><b>--warn</b><span>#925C00</span></div>
+            <div class="sw"><i style="background:var(--bad)"></i><b>--bad</b><span>#B42318</span></div>
+            <div class="sw"><i style="background:var(--info)"></i><b>--info</b><span>#1B5898</span></div>
+            <div class="sw"><i style="background:var(--plum)"></i><b>--plum</b><span>#7A3E8F</span></div>
+        </div>
+        <div class="band">
+            <div class="sw"><i style="background:var(--rail)"></i><b>--rail</b><span>#0A3826</span></div>
+            <div class="sw"><i style="background:var(--rail-ink)"></i><b>--rail-ink</b><span>#D6EADF</span></div>
+            <div class="sw"><i style="background:var(--rail-active)"></i><b>--rail-active</b><span>#13553A</span></div>
+            <div class="sw"><i style="background:var(--rail-gold)"></i><b>--rail-gold</b><span>#E5BB50</span></div>
+            <div class="sw"><i style="background:var(--scrim)"></i><b>--scrim</b><span>rgba(5,22,13,.48)</span></div>
+            <div class="sw"><i style="background:var(--surface);box-shadow:var(--shadow-lg)"></i><b>--shadow-lg</b><span>modal, toast</span></div>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Type</h3>
+        <p>Plus Jakarta Sans for anything read as language, IBM Plex Mono for anything counted. Mono
+            figures carry <code>tabular-nums</code> so a column of amounts lines up by itself.</p>
+        <div class="type-row"><em>30px 800 hero</em><span style="font-size:30px;font-weight:800;letter-spacing:-.025em">Good afternoon, Edina.</span></div>
+        <div class="type-row"><em>20px 800 page title</em><span style="font-size:20px;font-weight:800">Treasury position</span></div>
+        <div class="type-row"><em>16px 800 modal</em><span style="font-size:16px;font-weight:800">Record a savings deposit</span></div>
+        <div class="type-row"><em>15px 800 section</em><span style="font-size:15px;font-weight:800">Saved and earned in 2026</span></div>
+        <div class="type-row"><em>14px 400 body</em><span style="font-size:14px">Save at least UGX 20,000 by the 28th of each month.</span></div>
+        <div class="type-row"><em>13px 700 control</em><span style="font-size:13px;font-weight:700">Submit for checking</span></div>
+        <div class="type-row"><em>12.5px 400 small</em><span style="font-size:12.5px;color:var(--muted)">The amount a member has banked and the month it covers.</span></div>
+        <div class="type-row"><em>11px 700 label</em><span style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)">Principal savings</span></div>
+        <div class="type-row"><em>21px 600 mono figure</em><span class="mono" style="font-size:21px;font-weight:600"><span class="cur">UGX</span>12,591,666</span></div>
+        <div class="type-row"><em>mono reference</em><span class="mono">TX-0226 · 3 Nov 2026, 14:20</span></div>
+        <div class="legend-strip">
+            <span><i style="background:var(--brand)"></i>M or action</span>
+            <span><i style="background:var(--gold)"></i>Exception, interest due</span>
+            <span><i style="background:var(--ok)"></i>Posted, met</span>
+            <span><i style="background:var(--warn)"></i>Pending, below minimum</span>
+            <span><i style="background:var(--bad)"></i>Rejected, arrears</span>
+            <span><i style="background:var(--info)"></i>Being checked</span>
+            <span><i style="background:var(--plum)"></i>Activity</span>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Space, radius, borders</h3>
+        <p>The ladder is 2, 4, 5, 6, 7, 8, 10, 11, 12, 14, 16, 18, 20, 24, 28, 40, 48, 56. Content sits in
+            a 20px row grid capped at 1340px. Containers take <code>--r</code> at 10px and a 1px
+            <code>--line</code> border; controls take 8px and <code>--line-strong</code>, because a
+            control is the only thing a person can act on. A 2px border is a signal: it is used for the
+            waiting stamp and for a rejected field and nothing else.</p>
+        <div class="samples">
+            <span class="pill muted">10px card</span>
+            <span class="pill muted">8px control</span>
+            <span class="pill muted">7px stamp</span>
+            <span class="pill muted">6px day cell</span>
+            <span class="pill muted">14px modal</span>
+            <span class="pill muted">999px pill</span>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Buttons and links</h3>
+        <p>One <code>.primary</code> per view. Cancel always comes before it. An icon sits left of the
+            label at 16px.</p>
+        <div class="samples">
+            <button class="btn primary" type="button"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add activity</button>
+            <button class="btn" type="button">Cancel</button>
+            <button class="btn danger" type="button">Reject</button>
+            <button class="btn sm" type="button">Log reminder</button>
+            <button class="icon-btn" type="button" aria-label="Next year"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
+            <button class="link-btn" type="button">Remove</button>
+            <button class="btn" type="button" disabled>Sign in</button>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Status</h3>
+        <p>A pill holds one word, never a sentence. Money that is late or leaving the group goes in
+            <code>.neg</code> as well as the word that says so.</p>
+        <div class="samples">
+            <span class="pill ok">Posted</span>
+            <span class="pill warn">Pending chair</span>
+            <span class="pill info">Being checked</span>
+            <span class="pill bad">Rejected</span>
+            <span class="pill gold">Interest due</span>
+            <span class="pill muted">Left</span>
+            <span class="mono">Balance <span class="neg">&minus;412,500</span></span>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Key figures</h3>
+        <p>Four across, two under 1100px, one under 470px. The value is always mono; the tone tints the
+            figure only, never the card.</p>
+        <div class="kpis">
+            <div class="kpi"><div class="lbl">Principal savings</div><div class="val"><span class="cur">UGX</span>12,591,666</div><div class="sub">17 members</div></div>
+            <div class="kpi gold"><div class="lbl">Interest due to members</div><div class="val"><span class="cur">UGX</span>1,133,273</div><div class="sub">Paid out once a year</div></div>
+            <div class="kpi bad"><div class="lbl">In arrears</div><div class="val"><span class="cur">UGX</span>686,250</div><div class="sub">4 loans</div></div>
+            <div class="kpi ok"><div class="lbl">Available to lend</div><div class="val"><span class="cur">UGX</span>12,798,458</div><div class="sub">After reserve and commitments</div></div>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Stamp trail</h3>
+        <p>The signature of the product. Made, checked, authorised, each with the office and the person.
+            The dashed box names who still has to act; a mini trail carries the same three states into a
+            table column.</p>
+        <div class="trail" style="margin-bottom:12px">
+            <span class="stamp done"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg><span><b>Made</b><span class="st-who">Nakabuye Clare · Treasurer</span></span></span>
+            <span class="trail-sep"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></span>
+            <span class="stamp done"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg><span><b>Checked</b><span class="st-who">Edina · Chairperson</span></span></span>
+            <span class="trail-sep"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></span>
+            <span class="stamp wait"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span><b>Authorise</b><span class="st-who">Britton · Patron</span></span></span>
+        </div>
+        <div class="samples">
+            <span class="mini-trail">
+                <span class="mt done"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+                <span class="mt done"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+                <span class="mt wait"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/></svg></span>
+            </span>
+            <span class="mini-trail">
+                <span class="mt done"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+                <span class="mt no"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+            </span>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Table</h3>
+        <p>The wrapper scrolls sideways rather than squashing a figure. Names take a department under
+            them, not an extra column. The total lives in the footer.</p>
+        <div class="tbl">
+            <table>
+                <thead>
+                <tr><th>Member</th><th>Ext.</th><th class="num">Saved</th><th class="num">Loan</th><th class="num">Arrears</th><th>Status</th><th></th></tr>
+                </thead>
+                <tbody>
+                <tr class="click"><td>Conslencia Apio<span class="cell-sub">Procurement</span></td><td class="mono">412</td><td class="num">240,000</td><td class="num">1,800,000</td><td class="num"><span class="neg">412,500</span></td><td><span class="pill warn">Being checked</span></td><td class="row-act"><button class="btn sm" type="button">Open</button></td></tr>
+                <tr class="click"><td>Kasule Ronald<span class="cell-sub">Finance</span></td><td class="mono">208</td><td class="num">360,000</td><td class="num">&mdash;</td><td class="num"></td><td><span class="pill ok">Posted</span></td><td class="row-act"><button class="btn sm" type="button">Open</button></td></tr>
+                </tbody>
+                <tfoot><tr><td colspan="2">17 members</td><td class="num">3,975,000</td><td class="num">8,200,000</td><td class="num"><span class="neg">686,250</span></td><td colspan="2"></td></tr></tfoot>
+            </table>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Charts</h3>
+        <p>Bars carry series names in the legend and a description in the markup. A share inside a table
+            uses a half bar with the number still written beside it; a compliance line uses the full
+            width progress bar.</p>
+        <div class="cols2" style="align-items:center">
+            <div>
+                <div class="chart" role="img" aria-label="Saved and interest earned, August to November 2026">
+                    <div class="cy" style="height:140px">
+                        <span style="bottom:0">0</span>
+                        <span style="bottom:25%">100k</span>
+                        <span style="bottom:50%">200k</span>
+                        <span style="bottom:75%">300k</span>
+                        <span style="bottom:100%">400k</span>
+                    </div>
+                    <div class="cp" style="height:140px">
+                        <i class="gl" style="bottom:25%"></i><i class="gl" style="bottom:50%"></i>
+                        <i class="gl" style="bottom:75%"></i><i class="gl" style="bottom:100%"></i>
+                        <div class="cols">
+                            <div class="col"><div class="bar" style="height:62%;background:var(--brand)" title="August, Saved: UGX 248,000"></div><div class="bar" style="height:9%;background:var(--gold)" title="August, Interest: UGX 36,000"></div></div>
+                            <div class="col"><div class="bar" style="height:78%;background:var(--brand)" title="September, Saved: UGX 312,000"></div><div class="bar" style="height:11%;background:var(--gold)" title="September, Interest: UGX 44,000"></div></div>
+                            <div class="col"><div class="bar" style="height:55%;background:var(--brand)" title="October, Saved: UGX 220,000"></div><div class="bar" style="height:7%;background:var(--gold)" title="October, Interest: UGX 28,000"></div></div>
+                            <div class="col"><div class="bar" style="height:90%;background:var(--brand)" title="November, Saved: UGX 360,000"></div><div class="bar" style="height:13%;background:var(--gold)" title="November, Interest: UGX 52,000"></div></div>
+                        </div>
+                    </div>
+                    <div class="cx"><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span></div>
+                </div>
+                <div class="legend" style="margin-top:10px"><span><i style="background:var(--brand)"></i>Saved</span><span><i style="background:var(--gold)"></i>Interest earned</span></div>
+            </div>
+            <div class="stack-demo">
+                <div class="samples"><span class="hbar" style="flex:1"><i style="width:66%;background:var(--brand)"></i></span><span class="mono small">66%</span></div>
+                <div class="prog"><i style="width:29%"></i></div>
+                <span class="muted small">5 of 17 members have saved this month.</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Heat grid</h3>
+        <p>One cell per member per month. A month before joining is a middot, the current month reads
+            Due, a month being verified reads Check. The legend is printed above, never left out.</p>
+        <div class="legend" style="margin-bottom:8px">
+            <span><i style="background:var(--ok-soft)"></i>Met minimum</span>
+            <span><i style="background:var(--warn-soft)"></i>Below minimum</span>
+            <span><i style="background:var(--info-soft)"></i>Being checked</span>
+            <span><i style="background:var(--bad-soft)"></i>Missed</span>
+        </div>
+        <div class="tbl fit">
+            <table class="heat">
+                <thead><tr><th>Member</th><th>Jul</th><th>Aug</th><th>Sep</th><th>Oct</th><th>Nov</th></tr></thead>
+                <tbody>
+                <tr><td>Nsubuga Ivan</td><td class="hc met">50k</td><td class="hc met">50k</td><td class="hc low">20k</td><td class="hc met">50k</td><td class="hc na">Due</td></tr>
+                <tr><td>Apio Conslencia</td><td class="hc na">&middot;</td><td class="hc miss">None</td><td class="hc met">40k</td><td class="hc pend">Check</td><td class="hc na">Due</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Waterfall</h3>
+        <p>How cash becomes what can be lent. Deductions take the real minus sign and a plain sentence
+            about why the money is held.</p>
+        <div class="wf">
+            <div class="wf-row"><span>Cash at bank<span class="cell-sub">All posted movements</span></span><span class="num">23,979,458</span></div>
+            <div class="wf-row"><span><span class="muted">&minus;</span>&nbsp;Liquidity reserve<span class="cell-sub">25% of members&rsquo; savings, kept for exits</span></span><span class="num">2,981,000</span></div>
+            <div class="wf-row"><span><span class="muted">&minus;</span>&nbsp;Committed loans<span class="cell-sub">Approved, not yet paid out</span></span><span class="num">8,200,000</span></div>
+            <div class="wf-row total"><span>Available to lend</span><span class="num">12,798,458</span></div>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Message bars</h3>
+        <p>Chosen by what they say, not how loud they need to be.</p>
+        <div class="stack-demo">
+            <div class="conf-banner"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span>Financial entries are hidden from the System Owner account. The Chairperson, Patron and Accountant see the full trail.</span></div>
+            <div class="rules"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/></svg><span>Save at least <b>UGX 20,000</b> by the 28th of each month. Your principal stays in PEG until you leave PlusSave.</span><button class="btn sm" type="button">Notify a payment</button></div>
+            <div class="warnbox"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Waiting for the Chairperson to approve: <b>Nsubuga Ivan</b> (Finance).</span></div>
+            <div class="badbox"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg><span>Declined by the Treasurer: the repayment period is longer than this amount allows.</span></div>
+            <div class="maker-note"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>This entry goes to the Chairperson for checking before it posts.</span></div>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Forms</h3>
+        <p>A label is always a real <code>&lt;label&gt;</code>. A derived figure sits beside the fields a
+            person types into, read-only and unnamed. A rejected field thickens as well as reddens, and
+            the message under it names the field and says what to type.</p>
+        <form class="form" style="max-width:520px" onsubmit="return false">
+            <div class="grid2">
+                <div class="field"><label for="d-a">Amount (UGX)</label><input id="d-a" class="field-invalid" type="number" value=""><div class="field-error">Enter the amount the member banked, in whole shillings.</div></div>
+                <div class="field"><label for="d-mo">Month covered</label><input id="d-mo" type="month" value="2026-11"></div>
+            </div>
+            <div class="field"><label for="d-c">Channel</label><select id="d-c"><option>Mobile money</option><option>Bank transfer</option><option>Salary deduction</option></select></div>
+            <div class="field"><label for="d-r">Value date</label><input id="d-r" type="text" value="03 Nov 2026" readonly><span class="hint">Set by the Treasurer from the banked date.</span></div>
+            <div class="maker-note"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/></svg><span>This entry goes to the Chairperson for checking before it posts.</span></div>
+            <div class="form-actions"><button class="btn" type="button">Cancel</button><button class="btn primary" type="submit">Submit for checking</button></div>
+        </form>
+    </section>
+
+    <section class="spec">
+        <h3>Dialog</h3>
+        <p>620px wide, 920px for <code>.wide</code>, one scrim, a sticky header with a named close button,
+            and the page behind cannot scroll. A dialog that came back with an error reopens itself with
+            the words still beside the fields.</p>
+        <div class="demo-back">
+            <div class="modal">
+                <div class="mdl-h"><h3>Record a savings deposit</h3><button class="icon-btn" type="button" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+                <div class="mdl-b">
+                    <dl class="kv"><dt>Member</dt><dd>PEG-004 · Apio Conslencia</dd><dt>Department</dt><dd>Procurement</dd><dt>Months saved</dt><dd>9</dd></dl>
+                    <div class="form-actions"><button class="btn" type="button">Cancel</button><button class="btn primary" type="button">Submit for checking</button></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Navigation, tabs, filters</h3>
+        <p>The rail is 256px of deep PlusSave green with three groups: My PEG, Committee, System. A page
+            a person can see but not open stays in the rail with a lock, so the desk is known and its
+            owner is named. Tabs carry live counts; filters are links, so a view is shareable.</p>
+        <div class="stack-demo">
+            <div class="tabs" role="tablist" aria-label="Example tabs">
+                <a class="tab on" href="#" aria-selected="true">Waiting for you<span class="tn">3</span></a>
+                <a class="tab" href="#">With the Patron<span class="tn">1</span></a>
+                <a class="tab" href="#">Decided by you</a>
+            </div>
+            <div class="chips">
+                <a class="chip-f on" href="#" aria-pressed="true">Active (17)</a>
+                <a class="chip-f" href="#">Left (3)</a>
+                <a class="chip-f" href="#">All (20)</a>
+            </div>
+            <div class="chips">
+                <span class="chip-f t-meeting on"><i class="dot"></i>Committee meeting</span>
+                <span class="chip-f t-general on"><i class="dot"></i>General meeting</span>
+                <span class="chip-f t-deadline on"><i class="dot"></i>Deadline</span>
+                <span class="chip-f t-finance on"><i class="dot"></i>Finance</span>
+                <span class="chip-f t-activity"><i class="dot"></i>Activity</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Records that read as documents</h3>
+        <div class="stack-demo">
+            <div class="notice">
+                <h4><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M9 4h6l-1 6 3 3H7l3-3z"/><path d="M12 13v7"/></svg>November contribution reminder</h4>
+                <p>Bank by the 28th so your month counts. Interest is shared on the last day of the month.</p>
+                <div class="meta"><span>Spokesman</span><span>03 Nov 2026</span><span>All members</span></div>
+            </div>
+            <div class="ev t-deadline">
+                <div class="ev-date"><b>28</b><span>Nov</span></div>
+                <div>
+                    <div class="ev-type"><i class="dot"></i>Deadline</div>
+                    <div class="ev-t">Monthly contribution deadline</div>
+                </div>
+            </div>
+            <details class="mins"><summary><span><b>Committee meeting, October 2026</b><span class="cell-sub">02 Oct 2026 · 7 of 7 committee members</span></span><span class="pill ok">Committee</span></summary>
+                <div class="mins-b"><p>The committee reviewed the facility from Stansley SACCO and the arrears position.</p><div><div class="lbl-s">Resolutions</div><ol><li>Repaid the first two installments on time.</li><li>Set the loan policy review for 20 November.</li></ol></div><div class="muted small">Recorded by the Secretary</div></div>
+            </details>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Feedback</h3>
+        <p>A toast names what happened and sits bottom right, ink on light or solid red for a failure.</p>
+        <div class="samples">
+            <div class="toast static"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 12.5l5 5L20 6.5"/></svg>TX-0231 sent to the Chairperson for checking</div>
+            <div class="toast bad static"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18h.01"/></svg>The deposit date is after today</div>
+        </div>
+    </section>
+
+    <section class="spec">
+        <h3>Mobilisation and board</h3>
+        <p>Names, never figures. A board column counts its cards.</p>
+        <div class="board">
+            <div class="bcol"><h4>Approached<span>2</span></h4><div class="bcard"><b>Ochieng David</b><span class="muted small">Operations</span><div class="row"><button class="btn sm" type="button">Mark interested</button></div></div></div>
+            <div class="bcol"><h4>Interested<span>1</span></h4><div class="bcard"><b>Namutebwe Sarah</b><span class="muted small">Marketing · asked about loan limits</span><div class="row"><button class="btn sm primary" type="button">Register</button></div></div></div>
+            <div class="bcol"><h4>Registered<span>1</span></h4><div class="bcard"><b>Kato Musa</b><span class="muted small">Security</span><div class="row"><span class="pill warn">Awaiting Chairperson</span></div></div></div>
+        </div>
+        <div class="name-chips"><span class="nchip">Kasule Ronald</span><span class="nchip">Nsubuga Ivan</span><span class="nchip">Apio Conslencia · checking</span></div>
+    </section>
+</div>
+<script>
+document.getElementById('flip').addEventListener('click',function(){
+  var dark=document.documentElement.getAttribute('data-theme')==='dark';
+  document.documentElement.setAttribute('data-theme',dark?'light':'dark');
+  this.textContent=dark?'Show the dark theme':'Back to the light theme';
+});
+</script>
+</body>
+</html>
